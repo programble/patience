@@ -1,4 +1,5 @@
 use std::char;
+use std::cmp::Ordering;
 
 use super::{Suit, Rank};
 
@@ -8,6 +9,16 @@ use super::{Suit, Rank};
 pub struct Card {
     pub suit: Suit,
     pub rank: Rank,
+}
+
+impl PartialOrd for Card {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        if self.suit == other.suit {
+            Some(self.rank.cmp(&other.rank))
+        } else {
+            None
+        }
+    }
 }
 
 impl Into<char> for Card {
