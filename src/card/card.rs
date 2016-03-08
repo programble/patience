@@ -26,7 +26,7 @@ impl Into<char> for Card {
         // "Knight" appears between "Jack" and "Queen" in Unicode.
         let base = match self.rank {
             Rank::Queen => '🂭',
-            Rank::King => '🂭',
+            Rank::King => '🂮',
             r => char::from_u32('🂠' as u32 + r as u32).unwrap(),
         };
 
