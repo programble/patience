@@ -40,3 +40,12 @@ impl Into<char> for Card {
         char::from_u32(base as u32 + offset).unwrap()
     }
 }
+
+impl Into<String> for Card {
+    fn into(self) -> String {
+        let mut s = String::new();
+        s.push(self.suit.into());
+        s.push(self.rank.into());
+        s
+    }
+}
