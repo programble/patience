@@ -33,12 +33,12 @@ impl Pile {
         self.vec.last().cloned()
     }
 
-    /// Push a card onto the pile.
+    /// Pushes a card onto the pile.
     pub fn push(&mut self, face: Face) {
         self.vec.push(face);
     }
 
-    /// Pop a card from the pile.
+    /// Pops a card from the pile.
     pub fn pop(&mut self) -> Option<Face> {
         self.vec.pop()
     }
@@ -60,17 +60,18 @@ impl Pile {
         let _ = self.vec.last_mut().map(Face::flip);
     }
 
-    /// Moves `count` cards from the top of this pile to the top of another pile.
+    /// Moves at most `count` cards from the top of this pile to the top of another pile.
     pub fn move_to(&mut self, dest: &mut Pile, count: usize, flip: bool) {
-        let index = self.vec.len() - count;
+        let index = self.vec.len().saturating_sub(count);
         for face in self.vec.drain(index..) {
             dest.push(if flip { face.flipped() } else { face });
         }
     }
 
-    /// Deals `count` cards from the top of this pile to the top of another pile, in reverse order.
+    /// Deals at most`count` cards from the top of this pile to the top of another pile, in reverse
+    /// order.
     pub fn deal_to(&mut self, dest: &mut Pile, count: usize, flip: bool) {
-        let index = self.vec.len() - count;
+        let index = self.vec.len().saturating_sub(count);
         for face in self.vec.drain(index..).rev() {
             dest.push(if flip { face.flipped() } else { face });
         }
