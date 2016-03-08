@@ -6,7 +6,7 @@ use rand::{self, Rng};
 use super::Face;
 
 /// Pile of face-down or face-up cards.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 #[allow(missing_docs)]
 pub struct Pile {
     pub vec: Vec<Face>,
@@ -28,6 +28,11 @@ impl Pile {
         for face in &mut self.vec {
             face.flip();
         }
+    }
+
+    /// Flips the top card of the pile.
+    pub fn flip_last(&mut self) {
+        let _ = self.vec.last_mut().map(Face::flip);
     }
 
     /// Push a card onto the pile.
