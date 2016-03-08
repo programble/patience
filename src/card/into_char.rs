@@ -2,6 +2,7 @@ use std::char;
 
 use super::{Suit, Rank, Card, Face};
 
+/// Unicode suit character.
 impl Into<char> for Suit {
     fn into(self) -> char {
         match self {
@@ -13,6 +14,7 @@ impl Into<char> for Suit {
     }
 }
 
+/// ASCII rank character: "A", 2–9, "T", "J", "Q", "K".
 impl Into<char> for Rank {
     fn into(self) -> char {
         match self {
@@ -33,6 +35,7 @@ impl Into<char> for Rank {
     }
 }
 
+/// Unicode card character.
 impl Into<char> for Card {
     fn into(self) -> char {
         // "Knight" appears between "Jack" and "Queen" in Unicode.
@@ -53,12 +56,14 @@ impl Into<char> for Card {
     }
 }
 
+/// Unicode suit character and ASCII rank character.
 impl Into<[char; 2]> for Card {
     fn into(self) -> [char; 2] {
         [self.suit.into(), self.rank.into()]
     }
 }
 
+/// Unicode card or card back character.
 impl Into<char> for Face {
     fn into(self) -> char {
         match self {
@@ -68,10 +73,11 @@ impl Into<char> for Face {
     }
 }
 
+/// Unicode suit character and ASCII rank character or two Unicode card backs.
 impl Into<[char; 2]> for Face {
     fn into(self) -> [char; 2] {
         match self {
-            Face::Down(_) => ['▮', '▮'],
+            Face::Down(_) => ['🂠', '🂠'],
             Face::Up(card) => card.into(),
         }
     }
