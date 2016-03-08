@@ -20,26 +20,26 @@ impl Pile {
     }
 
     /// Returns the number of cards in the pile.
-    pub fn len(&self) -> usize {
+    pub fn count(&self) -> usize {
         self.vec.len()
     }
 
-    /// Returns true if pile is empty.
+    /// Returns true if the pile is empty.
     pub fn is_empty(&self) -> bool {
         self.vec.is_empty()
     }
 
     /// Returns the top card.
-    pub fn last(&self) -> Option<Face> {
+    pub fn top(&self) -> Option<Face> {
         self.vec.last().cloned()
     }
 
-    /// Pushes a card onto the pile.
+    /// Adds a card to the top of the pile.
     pub fn push(&mut self, face: Face) {
         self.vec.push(face);
     }
 
-    /// Pops a card from the pile.
+    /// Removes a card from the top of the pile.
     pub fn pop(&mut self) -> Option<Face> {
         self.vec.pop()
     }
@@ -49,28 +49,28 @@ impl Pile {
         rand::thread_rng().shuffle(&mut self.vec);
     }
 
-    /// Flips each card in the pile.
+    /// Flips the whole pile over, reversing the order and flipping each card.
     pub fn flip(&mut self) {
+        self.vec.reverse();
         for face in &mut self.vec {
             face.flip();
         }
     }
 
     /// Flips the top card.
-    pub fn flip_last(&mut self) {
+    pub fn flip_top(&mut self) {
         let _ = self.vec.last_mut().map(Face::flip);
     }
 
     /// Moves at most `count` cards from the top of this pile to the top of another pile.
-    pub fn move_to(&mut self, dest: &mut Pile, count: usize, flip: bool) {
+    pub fn move_to(&mut self, dest: &mut Pile, count: usize) {
         let index = self.vec.len().saturating_sub(count);
         for face in self.vec.drain(index..) {
-            dest.push(if flip { face.flipped() } else { face });
+            dest.push(face);
         }
     }
 
-    /// Deals at most`count` cards from the top of this pile to the top of another pile, in reverse
-    /// order.
+    /// Deals at most `count` cards from the top of this pile onto the top of another pile.
     pub fn deal_to(&mut self, dest: &mut Pile, count: usize, flip: bool) {
         let index = self.vec.len().saturating_sub(count);
         for face in self.vec.drain(index..).rev() {

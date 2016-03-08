@@ -46,7 +46,7 @@ impl Game for Klondike {
         self.stock.shuffle();
         for (i, pile) in self.tableau.iter_mut().enumerate() {
             self.stock.deal_to(pile, i + 1, false);
-            pile.flip_last();
+            pile.flip_top();
         }
     }
 
