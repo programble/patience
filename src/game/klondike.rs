@@ -1,6 +1,7 @@
 //! Klondike solitaire.
 
 use card::{Set, Face, Pile};
+use super::Game;
 
 /// One-card or three-card draw.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -20,10 +21,11 @@ pub struct Klondike {
     tableau: [Pile; 7],
 }
 
-impl Klondike {
-    /// Creates a game of Klondike.
-    pub fn new(draw: Draw) -> Self {
-        let mut game = Klondike {
+impl Game for Klondike {
+    type Rules = Draw;
+
+    fn new(draw: Draw) -> Self {
+        Klondike {
             draw: draw,
             stock: Set::new().map(Face::Down).collect(),
             waste: Pile::new(),
@@ -37,16 +39,24 @@ impl Klondike {
                 Pile::new(),
                 Pile::new(),
             ],
-        };
-        game.setup();
-        game
+        }
     }
 
-    fn setup(&mut self) {
+    fn deal(&mut self) {
         self.stock.shuffle();
         for (i, pile) in self.tableau.iter_mut().enumerate() {
             self.stock.deal_to(pile, i + 1, false);
             pile.flip_last();
         }
+    }
+
+    fn is_won(&self) -> bool {
+        self.stock.is_empty()
+            && self.waste.is_empty()
+            && self.tableau.iter().all(Pile::is_empty)
+    }
+
+    fn is_lost(&self) -> bool {
+        unimplemented!()
     }
 }
