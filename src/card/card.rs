@@ -1,9 +1,10 @@
 use std::cmp::Ordering;
+use std::fmt::{Debug, Formatter, Error as FmtError};
 
 use super::{Suit, Rank};
 
 /// Card.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[allow(missing_docs)]
 pub struct Card {
     pub suit: Suit,
@@ -17,5 +18,11 @@ impl PartialOrd for Card {
         } else {
             None
         }
+    }
+}
+
+impl Debug for Card {
+    fn fmt(&self, f: &mut Formatter) -> Result<(), FmtError> {
+        write!(f, "{}{}", Into::<char>::into(self.suit), Into::<char>::into(self.rank))
     }
 }

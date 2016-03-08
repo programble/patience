@@ -1,9 +1,10 @@
 use std::cmp::Ordering;
+use std::fmt::{Debug, Formatter, Error as FmtError};
 
 use super::Card;
 
 /// Face-down or face-up card.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 #[allow(missing_docs)]
 pub enum Face {
     Down(Card),
@@ -52,5 +53,11 @@ impl Face {
 impl PartialOrd for Face {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         self.card().partial_cmp(&other.card())
+    }
+}
+
+impl Debug for Face {
+    fn fmt(&self, f: &mut Formatter) -> Result<(), FmtError> {
+        write!(f, "{}{:?}", Into::<char>::into(*self), self.card())
     }
 }

@@ -1,3 +1,4 @@
+use std::fmt::{Debug, Formatter, Error as FmtError};
 use std::iter::FromIterator;
 use std::slice::Iter;
 
@@ -6,7 +7,7 @@ use rand::{self, Rng};
 use super::Face;
 
 /// Pile of face-down or face-up cards.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq)]
 #[allow(missing_docs)]
 pub struct Pile {
     pub vec: Vec<Face>,
@@ -90,5 +91,13 @@ impl<'a> IntoIterator for &'a Pile {
 
     fn into_iter(self) -> Iter<'a, Face> {
         self.vec[..].into_iter()
+    }
+}
+
+impl Debug for Pile {
+    fn fmt(&self, f: &mut Formatter) -> Result<(), FmtError> {
+        f.debug_list()
+            .entries(&self.vec)
+            .finish()
     }
 }
