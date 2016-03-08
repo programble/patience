@@ -19,12 +19,3 @@ impl PartialOrd for Card {
         }
     }
 }
-
-impl Into<String> for Card {
-    fn into(self) -> String {
-        let mut s = String::new();
-        s.push(self.suit.into());
-        s.push(self.rank.into());
-        s
-    }
-}

@@ -53,10 +53,25 @@ impl Into<char> for Card {
     }
 }
 
+impl Into<[char; 2]> for Card {
+    fn into(self) -> [char; 2] {
+        [self.suit.into(), self.rank.into()]
+    }
+}
+
 impl Into<char> for Face {
     fn into(self) -> char {
         match self {
             Face::Down(_) => '🂠',
+            Face::Up(card) => card.into(),
+        }
+    }
+}
+
+impl Into<[char; 2]> for Face {
+    fn into(self) -> [char; 2] {
+        match self {
+            Face::Down(_) => ['▮', '▮'],
             Face::Up(card) => card.into(),
         }
     }
