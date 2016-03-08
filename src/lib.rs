@@ -13,4 +13,6 @@
     variant_size_differences
 )]
 
+extern crate rand;
+
 pub mod card;
