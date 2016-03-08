@@ -25,7 +25,7 @@ impl Pile {
 
     /// Returns the top card.
     pub fn last(&self) -> Option<Face> {
-        self.vec.last().map(Clone::clone)
+        self.vec.last().cloned()
     }
 
     /// Push a card onto the pile.
