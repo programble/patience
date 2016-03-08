@@ -41,4 +41,11 @@ impl Iterator for Set {
         };
         self.card
     }
+
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        (52, Some(52))
+    }
+
 }
+
+impl ExactSizeIterator for Set { }
