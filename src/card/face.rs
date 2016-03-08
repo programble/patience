@@ -11,12 +11,20 @@ pub enum Face {
 }
 
 impl Face {
-    /// Flips the card.
-    pub fn flip(&mut self) {
-        *self = match *self {
-            Face::Down(card) => Face::Up(card),
-            Face::Up(card) => Face::Down(card),
-        };
+    /// Returns true if the card is face-down.
+    pub fn is_down(&self) -> bool {
+        match *self {
+            Face::Down(_) => true,
+            _ => false,
+        }
+    }
+
+    /// Returns true if the card is face-up.
+    pub fn is_up(&self) -> bool {
+        match *self {
+            Face::Up(_) => true,
+            _ => false,
+        }
     }
 
     /// Returns the card.
@@ -25,6 +33,14 @@ impl Face {
             Face::Down(card) => card,
             Face::Up(card) => card,
         }
+    }
+
+    /// Flips the card.
+    pub fn flip(&mut self) {
+        *self = match *self {
+            Face::Down(card) => Face::Up(card),
+            Face::Up(card) => Face::Down(card),
+        };
     }
 }
 
