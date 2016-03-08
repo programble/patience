@@ -18,6 +18,26 @@ impl Pile {
         Pile { vec: Vec::new() }
     }
 
+    /// Returns the number of cards in the pile.
+    pub fn len(&self) -> usize {
+        self.vec.len()
+    }
+
+    /// Returns the top card.
+    pub fn last(&self) -> Option<Face> {
+        self.vec.last().map(Clone::clone)
+    }
+
+    /// Push a card onto the pile.
+    pub fn push(&mut self, face: Face) {
+        self.vec.push(face);
+    }
+
+    /// Pop a card from the pile.
+    pub fn pop(&mut self) -> Option<Face> {
+        self.vec.pop()
+    }
+
     /// Shuffles the pile.
     pub fn shuffle(&mut self) {
         rand::thread_rng().shuffle(&mut self.vec);
@@ -30,19 +50,9 @@ impl Pile {
         }
     }
 
-    /// Flips the top card of the pile.
+    /// Flips the top card.
     pub fn flip_last(&mut self) {
         let _ = self.vec.last_mut().map(Face::flip);
-    }
-
-    /// Push a card onto the pile.
-    pub fn push(&mut self, face: Face) {
-        self.vec.push(face);
-    }
-
-    /// Pop a card from the pile.
-    pub fn pop(&mut self) -> Option<Face> {
-        self.vec.pop()
     }
 
     /// Moves `count` cards from the top of this pile to the top of another pile.
