@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 use super::Card;
 
 /// Face-down or face-up card.
@@ -15,6 +17,20 @@ impl Face {
             Face::Down(card) => Face::Up(card),
             Face::Up(card) => Face::Down(card),
         };
+    }
+
+    /// Returns the card.
+    pub fn card(&self) -> Card {
+        match *self {
+            Face::Down(card) => card,
+            Face::Up(card) => card,
+        }
+    }
+}
+
+impl PartialOrd for Face {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        self.card().partial_cmp(&other.card())
     }
 }
 
