@@ -35,12 +35,17 @@ impl Face {
         }
     }
 
-    /// Flips the card.
-    pub fn flip(&mut self) {
-        *self = match *self {
+    /// Returns the card, flipped.
+    pub fn flipped(self) -> Self {
+        match self {
             Face::Down(card) => Face::Up(card),
             Face::Up(card) => Face::Down(card),
-        };
+        }
+    }
+
+    /// Flips the card in place.
+    pub fn flip(&mut self) {
+        *self = self.flipped();
     }
 }
 
