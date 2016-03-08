@@ -23,6 +23,11 @@ impl Pile {
         self.vec.len()
     }
 
+    /// Returns true if pile is empty.
+    pub fn is_empty(&self) -> bool {
+        self.vec.is_empty()
+    }
+
     /// Returns the top card.
     pub fn last(&self) -> Option<Face> {
         self.vec.last().cloned()
