@@ -18,3 +18,13 @@ pub enum Rank {
     Queen,
     King,
 }
+
+impl Rank {
+    /// Returns true if `self` is a face card, i.e. `Jack`, `Queen`, `King`.
+    pub fn is_face(&self) -> bool {
+        match *self {
+            Rank::Jack | Rank::Queen | Rank::King => true,
+            _ => false,
+        }
+    }
+}
