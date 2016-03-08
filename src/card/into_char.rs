@@ -14,7 +14,7 @@ impl Into<char> for Suit {
     }
 }
 
-/// ASCII rank character: "A", 2–9, "T", "J", "Q", "K".
+/// ASCII rank character: A, 2–9, T, J, Q, K.
 impl Into<char> for Rank {
     fn into(self) -> char {
         match self {
