@@ -25,4 +25,42 @@ impl Rank {
             _ => false,
         }
     }
+
+    /// Returns the successive rank.
+    pub fn succ(self) -> Option<Self> {
+        match self {
+            Rank::Ace => Some(Rank::Two),
+            Rank::Two => Some(Rank::Three),
+            Rank::Three => Some(Rank::Four),
+            Rank::Four => Some(Rank::Five),
+            Rank::Five => Some(Rank::Six),
+            Rank::Six => Some(Rank::Seven),
+            Rank::Seven => Some(Rank::Eight),
+            Rank::Eight => Some(Rank::Nine),
+            Rank::Nine => Some(Rank::Ten),
+            Rank::Ten => Some(Rank::Jack),
+            Rank::Jack => Some(Rank::Queen),
+            Rank::Queen => Some(Rank::King),
+            Rank::King => None,
+        }
+    }
+
+    /// Returns the predecessive rank.
+    pub fn pred(self) -> Option<Self> {
+        match self {
+            Rank::King => Some(Rank::Queen),
+            Rank::Queen => Some(Rank::Jack),
+            Rank::Jack => Some(Rank::Ten),
+            Rank::Ten => Some(Rank::Nine),
+            Rank::Nine => Some(Rank::Eight),
+            Rank::Eight => Some(Rank::Seven),
+            Rank::Seven => Some(Rank::Six),
+            Rank::Six => Some(Rank::Five),
+            Rank::Five => Some(Rank::Four),
+            Rank::Four => Some(Rank::Three),
+            Rank::Three => Some(Rank::Two),
+            Rank::Two => Some(Rank::Ace),
+            Rank::Ace => None,
+        }
+    }
 }
