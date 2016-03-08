@@ -1,5 +1,3 @@
 //! Games.
 
-pub use self::klondike::Klondike;
-
-mod klondike;
+pub mod klondike;
