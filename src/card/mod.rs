@@ -13,3 +13,5 @@ mod card;
 mod set;
 mod face;
 mod pile;
+
+mod into_char;

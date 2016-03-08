@@ -54,12 +54,3 @@ impl PartialOrd for Face {
         self.card().partial_cmp(&other.card())
     }
 }
-
-impl Into<char> for Face {
-    fn into(self) -> char {
-        match self {
-            Face::Down(_) => '🂠',
-            Face::Up(card) => card.into(),
-        }
-    }
-}
