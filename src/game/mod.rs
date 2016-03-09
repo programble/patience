@@ -5,6 +5,9 @@ pub trait Game {
     /// Game variation rules.
     type Rules;
 
+    /// Game move.
+    type Move;
+
     /// Creates a game.
     fn new(rules: Self::Rules) -> Self;
 

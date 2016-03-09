@@ -11,6 +11,54 @@ pub enum Draw {
     Three,
 }
 
+/// Foundations.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[allow(missing_docs)]
+pub enum Foundation {
+    One,
+    Two,
+    Three,
+    Four,
+}
+
+/// Tableaux.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[allow(missing_docs)]
+pub enum Tableau {
+    One,
+    Two,
+    Three,
+    Four,
+    Five,
+    Six,
+    Seven,
+}
+
+/// Klondike move.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Move {
+    /// Draw from stock into waste.
+    Draw,
+
+    /// Move waste back to stock.
+    Restock,
+
+    /// Move top card of waste to tableau.
+    WasteTableau(Tableau),
+
+    /// Move top card of waste to foundation.
+    WasteFoundation(Foundation),
+
+    /// Move top card of tableau to foundation.
+    TableauFoundation(Tableau, Foundation),
+
+    /// Move top card of foundation to tableau.
+    FoundationTableau(Foundation, Tableau),
+
+    /// Move cards from tableau to tableau.
+    TableauTableau(Tableau, usize, Tableau),
+}
+
 /// Klondike solitaire game.
 #[derive(Debug, PartialEq, Eq)]
 pub struct Klondike {
@@ -23,6 +71,7 @@ pub struct Klondike {
 
 impl Game for Klondike {
     type Rules = Draw;
+    type Move = Move;
 
     fn new(draw: Draw) -> Self {
         Klondike {

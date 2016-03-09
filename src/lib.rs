@@ -9,8 +9,7 @@
     unused_extern_crates,
     unused_import_braces,
     unused_qualifications,
-    unused_results,
-    variant_size_differences
+    unused_results
 )]
 
 extern crate rand;
