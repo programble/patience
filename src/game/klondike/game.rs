@@ -73,7 +73,7 @@ impl Game for Klondike {
             },
 
             Play::TableauTableau(src, count, dest) => {
-                self.foundations[src as usize].get_back(count).map_or(false, |face| {
+                self.tableau[src as usize].get_back(count).map_or(false, |face| {
                     face.is_up() && self.is_valid_tableau(dest, face.card())
                 })
             },
