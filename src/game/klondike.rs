@@ -41,7 +41,7 @@ pub enum Move {
     Draw,
 
     /// Move waste back to stock.
-    Restock,
+    Redeal,
 
     /// Move top card of waste to tableau.
     WasteTableau(Tableau),
