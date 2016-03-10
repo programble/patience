@@ -36,7 +36,10 @@ impl Pile {
 
     /// Gets the card at the index from the top.
     pub fn get_back(&self, index: usize) -> Option<Face> {
-        self.vec.get(self.vec.len() - index).cloned()
+        self.vec.len()
+            .checked_sub(index)
+            .and_then(|i| self.vec.get(i))
+            .cloned()
     }
 
     /// Returns the top card.
