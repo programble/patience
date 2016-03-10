@@ -34,9 +34,9 @@ pub enum Tableau {
     Seven,
 }
 
-/// Klondike move.
+/// Klondike play.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Move {
+pub enum Play {
     /// Draw from stock into waste.
     Draw,
 
@@ -71,7 +71,7 @@ pub struct Klondike {
 
 impl Game for Klondike {
     type Rules = Draw;
-    type Move = Move;
+    type Play = Play;
 
     fn new(draw: Draw) -> Self {
         Klondike {
