@@ -1,6 +1,6 @@
 use card::{Suit, Rank, Card, Face, Pile};
 use game::Game;
-use super::{Klondike, Draw, Play, Tableau};
+use super::{Klondike, Draw, Play, Foundation, Tableau};
 
 #[test]
 fn valid_draw_full_stock() {
@@ -84,4 +84,48 @@ fn invalid_waste_tableau_non_pred() {
     game.waste.push(Face::Up(Card::new(Suit::Heart, Rank::Jack)));
     game.tableau[0].push(Face::Up(Card::new(Suit::Club, Rank::King)));
     assert!(!game.is_valid(&Play::WasteTableau(Tableau::One)));
+}
+
+#[test]
+fn valid_waste_foundation_ace() {
+    let mut game = Klondike::new(Draw::One);
+    game.waste.push(Face::Up(Card::new(Suit::Spade, Rank::Ace)));
+    assert!(game.is_valid(&Play::WasteFoundation(Foundation::One)));
+}
+
+#[test]
+fn valid_waste_foundation_suit_succ() {
+    let mut game = Klondike::new(Draw::One);
+    game.waste.push(Face::Up(Card::new(Suit::Spade, Rank::Two)));
+    game.foundations[0].push(Face::Up(Card::new(Suit::Spade, Rank::Ace)));
+    assert!(game.is_valid(&Play::WasteFoundation(Foundation::One)));
+}
+
+#[test]
+fn invalid_waste_foundation_empty_waste() {
+    let game = Klondike::new(Draw::One);
+    assert!(!game.is_valid(&Play::WasteFoundation(Foundation::One)));
+}
+
+#[test]
+fn invalid_waste_foundation_non_ace() {
+    let mut game = Klondike::new(Draw::One);
+    game.waste.push(Face::Up(Card::new(Suit::Spade, Rank::Two)));
+    assert!(!game.is_valid(&Play::WasteFoundation(Foundation::One)));
+}
+
+#[test]
+fn invalid_waste_foundation_non_succ() {
+    let mut game = Klondike::new(Draw::One);
+    game.waste.push(Face::Up(Card::new(Suit::Spade, Rank::Three)));
+    game.foundations[0].push(Face::Up(Card::new(Suit::Spade, Rank::Ace)));
+    assert!(!game.is_valid(&Play::WasteFoundation(Foundation::One)));
+}
+
+#[test]
+fn invalid_waste_foundation_non_suit() {
+    let mut game = Klondike::new(Draw::One);
+    game.waste.push(Face::Up(Card::new(Suit::Club, Rank::Two)));
+    game.foundations[0].push(Face::Up(Card::new(Suit::Spade, Rank::Ace)));
+    assert!(!game.is_valid(&Play::WasteFoundation(Foundation::One)));
 }
