@@ -29,6 +29,16 @@ impl Pile {
         self.vec.is_empty()
     }
 
+    /// Gets the card at the index from the bottom.
+    pub fn get(&self, index: usize) -> Option<Face> {
+        self.vec.get(index).cloned()
+    }
+
+    /// Gets the card at the index from the top.
+    pub fn get_back(&self, index: usize) -> Option<Face> {
+        self.vec.get(self.vec.len() - index).cloned()
+    }
+
     /// Returns the top card.
     pub fn top(&self) -> Option<Face> {
         self.vec.last().cloned()
