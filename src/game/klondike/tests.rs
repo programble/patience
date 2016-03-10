@@ -217,3 +217,119 @@ fn invalid_foundation_tableau_non_pred() {
     game.tableau[0].push(Face::Up(Card::new(Suit::Club, Rank::King)));
     assert!(!game.is_valid(&Play::FoundationTableau(Foundation::One, Tableau::One)));
 }
+
+#[test]
+fn valid_tableau_tableau_one_king() {
+    let mut game = Klondike::new(Draw::One);
+    game.tableau[0].push(Face::Up(Card::new(Suit::Club, Rank::King)));
+    assert!(game.is_valid(&Play::TableauTableau(Tableau::One, 1, Tableau::Two)));
+}
+
+#[test]
+fn valid_tableau_tableau_two_king() {
+    let mut game = Klondike::new(Draw::One);
+    game.tableau[0].push(Face::Up(Card::new(Suit::Club, Rank::King)));
+    game.tableau[0].push(Face::Up(Card::new(Suit::Heart, Rank::Queen)));
+    assert!(game.is_valid(&Play::TableauTableau(Tableau::One, 2, Tableau::Two)));
+}
+
+#[test]
+fn valid_tableau_tableau_one_pred_color() {
+    let mut game = Klondike::new(Draw::One);
+    game.tableau[0].push(Face::Up(Card::new(Suit::Club, Rank::Ace)));
+    game.tableau[1].push(Face::Up(Card::new(Suit::Heart, Rank::Two)));
+    assert!(game.is_valid(&Play::TableauTableau(Tableau::One, 1, Tableau::Two)));
+}
+
+#[test]
+fn valid_tableau_tableau_two_pred_color() {
+    let mut game = Klondike::new(Draw::One);
+    game.tableau[0].push(Face::Up(Card::new(Suit::Club, Rank::Queen)));
+    game.tableau[0].push(Face::Up(Card::new(Suit::Heart, Rank::Jack)));
+    game.tableau[1].push(Face::Up(Card::new(Suit::Diamond, Rank::King)));
+    assert!(game.is_valid(&Play::TableauTableau(Tableau::One, 2, Tableau::Two)));
+}
+
+#[test]
+fn invalid_tableau_tableau_empty_src() {
+    let game = Klondike::new(Draw::One);
+    assert!(!game.is_valid(&Play::TableauTableau(Tableau::One, 1, Tableau::Two)));
+}
+
+#[test]
+fn invalid_tableau_tableau_face_down() {
+    let mut game = Klondike::new(Draw::One);
+    game.tableau[0].push(Face::Down(Card::new(Suit::Heart, Rank::King)));
+    game.tableau[0].push(Face::Up(Card::new(Suit::Spade, Rank::Queen)));
+    assert!(!game.is_valid(&Play::TableauTableau(Tableau::One, 2, Tableau::Two)));
+}
+
+#[test]
+fn invalid_tableau_tableau_count() {
+    let mut game = Klondike::new(Draw::One);
+    game.tableau[0].push(Face::Up(Card::new(Suit::Spade, Rank::King)));
+    assert!(!game.is_valid(&Play::TableauTableau(Tableau::One, 2, Tableau::Two)));
+}
+
+#[test]
+fn invalid_tableau_tableau_zero() {
+    let mut game = Klondike::new(Draw::One);
+    game.tableau[0].push(Face::Up(Card::new(Suit::Spade, Rank::King)));
+    assert!(!game.is_valid(&Play::TableauTableau(Tableau::One, 0, Tableau::Two)));
+}
+
+#[test]
+fn invalid_tableau_tableau_same() {
+    let mut game = Klondike::new(Draw::One);
+    game.tableau[0].push(Face::Up(Card::new(Suit::Heart, Rank::King)));
+    assert!(!game.is_valid(&Play::TableauTableau(Tableau::One, 1, Tableau::One)));
+}
+
+#[test]
+fn invalid_tableau_tableau_one_non_king() {
+    let mut game = Klondike::new(Draw::One);
+    game.tableau[0].push(Face::Up(Card::new(Suit::Spade, Rank::Queen)));
+    assert!(!game.is_valid(&Play::TableauTableau(Tableau::One, 1, Tableau::Two)));
+}
+
+#[test]
+fn invalid_tableau_tableau_two_non_king() {
+    let mut game = Klondike::new(Draw::One);
+    game.tableau[0].push(Face::Up(Card::new(Suit::Spade, Rank::Queen)));
+    game.tableau[0].push(Face::Up(Card::new(Suit::Heart, Rank::Jack)));
+    assert!(!game.is_valid(&Play::TableauTableau(Tableau::One, 2, Tableau::Two)));
+}
+
+#[test]
+fn invalid_tableau_tableau_one_non_color() {
+    let mut game = Klondike::new(Draw::One);
+    game.tableau[0].push(Face::Up(Card::new(Suit::Spade, Rank::Queen)));
+    game.tableau[1].push(Face::Up(Card::new(Suit::Club, Rank::King)));
+    assert!(!game.is_valid(&Play::TableauTableau(Tableau::One, 1, Tableau::Two)));
+}
+
+#[test]
+fn invalid_tableau_tableau_two_non_color() {
+    let mut game = Klondike::new(Draw::One);
+    game.tableau[0].push(Face::Up(Card::new(Suit::Spade, Rank::Queen)));
+    game.tableau[0].push(Face::Up(Card::new(Suit::Heart, Rank::Jack)));
+    game.tableau[1].push(Face::Up(Card::new(Suit::Club, Rank::King)));
+    assert!(!game.is_valid(&Play::TableauTableau(Tableau::One, 2, Tableau::Two)));
+}
+
+#[test]
+fn invalid_tableau_tableau_one_non_pred() {
+    let mut game = Klondike::new(Draw::One);
+    game.tableau[0].push(Face::Up(Card::new(Suit::Spade, Rank::Jack)));
+    game.tableau[1].push(Face::Up(Card::new(Suit::Heart, Rank::King)));
+    assert!(!game.is_valid(&Play::TableauTableau(Tableau::One, 1, Tableau::Two)));
+}
+
+#[test]
+fn invalid_tableau_tableau_two_non_pred() {
+    let mut game = Klondike::new(Draw::One);
+    game.tableau[0].push(Face::Up(Card::new(Suit::Spade, Rank::Jack)));
+    game.tableau[0].push(Face::Up(Card::new(Suit::Diamond, Rank::Ten)));
+    game.tableau[1].push(Face::Up(Card::new(Suit::Heart, Rank::King)));
+    assert!(!game.is_valid(&Play::TableauTableau(Tableau::One, 2, Tableau::Two)));
+}
