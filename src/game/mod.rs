@@ -16,6 +16,9 @@ pub trait Game {
 
     /// Returns true if the game is won.
     fn is_won(&self) -> bool;
+
+    /// Determines if the play is currently valid.
+    fn is_valid(&self, play: &Self::Play) -> bool;
 }
 
 pub mod klondike;
