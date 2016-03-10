@@ -173,3 +173,47 @@ fn invalid_tableau_foundation_non_suit() {
     game.foundations[0].push(Face::Up(Card::new(Suit::Spade, Rank::Ace)));
     assert!(!game.is_valid(&Play::TableauFoundation(Tableau::One, Foundation::One)));
 }
+
+#[test]
+fn valid_foundation_tableau_king() {
+    let mut game = Klondike::new(Draw::One);
+    game.foundations[0].push(Face::Up(Card::new(Suit::Club, Rank::King)));
+    assert!(game.is_valid(&Play::FoundationTableau(Foundation::One, Tableau::One)));
+}
+
+#[test]
+fn valid_foundation_tableau_pred_color() {
+    let mut game = Klondike::new(Draw::One);
+    game.foundations[0].push(Face::Up(Card::new(Suit::Heart, Rank::Queen)));
+    game.tableau[0].push(Face::Up(Card::new(Suit::Club, Rank::King)));
+    assert!(game.is_valid(&Play::FoundationTableau(Foundation::One, Tableau::One)));
+}
+
+#[test]
+fn invalid_foundation_tableau_empty_foundation() {
+    let game = Klondike::new(Draw::One);
+    assert!(!game.is_valid(&Play::FoundationTableau(Foundation::One, Tableau::One)));
+}
+
+#[test]
+fn invalid_foundation_tableau_non_king() {
+    let mut game = Klondike::new(Draw::One);
+    game.foundations[0].push(Face::Up(Card::new(Suit::Heart, Rank::Queen)));
+    assert!(!game.is_valid(&Play::FoundationTableau(Foundation::One, Tableau::One)));
+}
+
+#[test]
+fn invalid_foundation_tableau_non_color() {
+    let mut game = Klondike::new(Draw::One);
+    game.foundations[0].push(Face::Up(Card::new(Suit::Heart, Rank::Queen)));
+    game.tableau[0].push(Face::Up(Card::new(Suit::Diamond, Rank::King)));
+    assert!(!game.is_valid(&Play::FoundationTableau(Foundation::One, Tableau::One)));
+}
+
+#[test]
+fn invalid_foundation_tableau_non_pred() {
+    let mut game = Klondike::new(Draw::One);
+    game.foundations[0].push(Face::Up(Card::new(Suit::Heart, Rank::Jack)));
+    game.tableau[0].push(Face::Up(Card::new(Suit::Club, Rank::King)));
+    assert!(!game.is_valid(&Play::FoundationTableau(Foundation::One, Tableau::One)));
+}
