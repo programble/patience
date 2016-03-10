@@ -115,8 +115,10 @@ impl Game for Klondike {
                 self.stock.is_empty() && !self.waste.is_empty()
             },
 
-            Play::WasteTableau(_tableau) => {
-                unimplemented!()
+            Play::WasteTableau(tableau) => {
+                self.waste.top().map_or(false, |face| {
+                    self.is_valid_tableau(tableau, face.card())
+                })
             },
 
             Play::WasteFoundation(foundation) => {
@@ -131,12 +133,16 @@ impl Game for Klondike {
                 })
             },
 
-            Play::FoundationTableau(_foundation, _tableau) => {
-                unimplemented!()
+            Play::FoundationTableau(foundation, tableau) => {
+                self.foundations[foundation as usize].top().map_or(false, |face| {
+                    self.is_valid_tableau(tableau, face.card())
+                })
             },
 
-            Play::TableauTableau(_src, _count, _dest) => {
-                unimplemented!()
+            Play::TableauTableau(src, count, dest) => {
+                self.foundations[src as usize].get_back(count).map_or(false, |face| {
+                    face.is_up() && self.is_valid_tableau(dest, face.card())
+                })
             },
         }
     }
@@ -150,6 +156,16 @@ impl Klondike {
         } else {
             let top = foundation.top().unwrap().card();
             card.suit == top.suit && card.rank.pred() == Some(top.rank)
+        }
+    }
+
+    fn is_valid_tableau(&self, tableau: Tableau, card: Card) -> bool {
+        let tableau = &self.tableau[tableau as usize];
+        if tableau.is_empty() {
+            card.rank == Rank::King
+        } else {
+            let top = tableau.top().unwrap().card();
+            card.suit.color() != top.suit.color() && card.rank.succ() == Some(top.rank)
         }
     }
 }
