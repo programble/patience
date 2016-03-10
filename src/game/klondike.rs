@@ -104,8 +104,4 @@ impl Game for Klondike {
             && self.waste.is_empty()
             && self.tableau.iter().all(Pile::is_empty)
     }
-
-    fn is_lost(&self) -> bool {
-        unimplemented!()
-    }
 }
