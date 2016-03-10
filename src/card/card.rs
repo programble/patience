@@ -11,6 +11,16 @@ pub struct Card {
     pub rank: Rank,
 }
 
+impl Card {
+    /// Creates a card.
+    pub fn new(suit: Suit, rank: Rank) -> Self {
+        Card {
+            suit: suit,
+            rank: rank,
+        }
+    }
+}
+
 impl PartialOrd for Card {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         if self.suit == other.suit {
