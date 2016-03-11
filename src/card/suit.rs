@@ -10,9 +10,9 @@ pub enum Color {
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[allow(missing_docs)]
 pub enum Suit {
+    Heart,
     Club,
     Diamond,
-    Heart,
     Spade,
 }
 
