@@ -1,4 +1,4 @@
-use super::{Card, Suit, Rank};
+use super::Card;
 
 /// Iterator of the standard 52-card set.
 #[derive(Debug, Clone, Copy)]
@@ -18,18 +18,12 @@ impl Iterator for Set {
 
     fn next(&mut self) -> Option<Card> {
         self.card = match self.card {
-            None => Some(Card { suit: Suit::Heart, rank: Rank::Ace }),
+            None => Some(card!(H A)),
 
-            Some(Card { suit: Suit::Heart, rank: Rank::King }) => {
-                Some(Card { suit: Suit::Club, rank: Rank::Ace })
-            },
-            Some(Card { suit: Suit::Club, rank: Rank::King }) => {
-                Some(Card { suit: Suit::Diamond, rank: Rank::Ace })
-            },
-            Some(Card { suit: Suit::Diamond, rank: Rank::King }) => {
-                Some(Card { suit: Suit::Spade, rank: Rank::Ace })
-            },
-            Some(Card { suit: Suit::Spade, rank: Rank::King }) => None,
+            Some(card!(H K)) => Some(card!(C A)),
+            Some(card!(C K)) => Some(card!(D A)),
+            Some(card!(D K)) => Some(card!(S A)),
+            Some(card!(S K)) => None,
 
             Some(Card { suit, rank }) => {
                 Some(Card { suit: suit, rank: rank.succ().unwrap() })
