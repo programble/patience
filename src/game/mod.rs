@@ -19,6 +19,9 @@ pub trait Game {
 
     /// Determines if the play is currently valid.
     fn is_valid(&self, play: &Self::Play) -> bool;
+
+    /// Performs a play.
+    fn play(&mut self, play: &Self::Play);
 }
 
 pub mod klondike;
