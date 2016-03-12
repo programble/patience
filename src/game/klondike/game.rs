@@ -115,7 +115,6 @@ impl Game for Klondike {
                     &mut self.foundations[foundation as usize],
                     1,
                 );
-                self.tableau[tableau as usize].flip_top();
             },
 
             Play::FoundationTableau(foundation, tableau) => {
@@ -133,7 +132,6 @@ impl Game for Klondike {
                     let (left, right) = self.tableau.split_at_mut(src as usize);
                     right[0].move_to(&mut left[dest as usize], count as usize);
                 }
-                self.tableau[src as usize].flip_top();
             },
         }
     }
