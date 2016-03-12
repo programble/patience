@@ -447,3 +447,64 @@ mod play {
         assert_eq!(b, game.tableau[0].get_back(1));
     }
 }
+
+mod undo {
+    use game::Game;
+    use game::klondike::{Klondike, Draw, Play, Foundation, Tableau};
+
+    macro_rules! undo_test {
+        ($name:ident, $play:expr) => {
+            #[test]
+            fn $name() {
+                let mut before = Klondike::new(Draw::Three);
+                before.deal();
+                before.play(&Play::Draw);
+                before.play(&Play::WasteFoundation(Foundation::One));
+                let mut after = before.clone();
+                after.play(&$play);
+                after.undo(&$play);
+                assert_eq!(before, after);
+            }
+        }
+    }
+
+    #[test]
+    fn draw_one() {
+        let mut before = Klondike::new(Draw::One);
+        before.deal();
+        let mut after = before.clone();
+        after.play(&Play::Draw);
+        after.undo(&Play::Draw);
+        assert_eq!(before, after);
+    }
+
+    #[test]
+    fn draw_three() {
+        let mut before = Klondike::new(Draw::Three);
+        before.deal();
+        let mut after = before.clone();
+        after.play(&Play::Draw);
+        after.undo(&Play::Draw);
+        assert_eq!(before, after);
+    }
+
+    #[test]
+    fn redeal() {
+        let mut before = Klondike::new(Draw::Three);
+        before.deal();
+        while !before.stock.is_empty() {
+            before.play(&Play::Draw);
+        }
+        let mut after = before.clone();
+        after.play(&Play::Redeal);
+        after.undo(&Play::Redeal);
+        assert_eq!(before, after);
+    }
+
+    undo_test!(reveal, Play::Reveal(Tableau::One));
+    undo_test!(waste_tableau, Play::WasteTableau(Tableau::One));
+    undo_test!(waste_foundation, Play::WasteFoundation(Foundation::One));
+    undo_test!(tableau_foundation, Play::TableauFoundation(Tableau::One, Foundation::One));
+    undo_test!(foundation_tableau, Play::FoundationTableau(Foundation::One, Tableau::One));
+    undo_test!(tableau_tableau, Play::TableauTableau(Tableau::Three, 2, Tableau::One));
+}
