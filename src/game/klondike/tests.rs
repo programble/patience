@@ -423,7 +423,6 @@ mod play {
         let card = game.tableau[1].top();
         game.play(&Play::TableauFoundation(Tableau::Two, Foundation::One));
         assert_eq!(card, game.foundations[0].top());
-        assert!(game.tableau[1].top().unwrap().is_up());
     }
 
     #[test]
@@ -446,6 +445,5 @@ mod play {
         game.play(&Play::TableauTableau(Tableau::Two, 2, Tableau::One));
         assert_eq!(a, game.tableau[0].get_back(2));
         assert_eq!(b, game.tableau[0].get_back(1));
-        assert!(game.tableau[1].top().unwrap().is_up());
     }
 }
