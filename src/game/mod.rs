@@ -22,6 +22,9 @@ pub trait Game {
 
     /// Performs a play.
     fn play(&mut self, play: &Self::Play);
+
+    /// Undoes a play.
+    fn undo(&mut self, play: &Self::Play);
 }
 
 pub mod klondike;

@@ -135,6 +135,42 @@ impl Game for Klondike {
             },
         }
     }
+
+    fn undo(&mut self, play: &Play) {
+        match *play {
+            Play::Draw => match self.draw {
+                Draw::One => self.waste.deal_to(&mut self.stock, 1, true),
+                Draw::Three => self.waste.deal_to(&mut self.stock, 3, true),
+            },
+
+            Play::Redeal => {
+                mem::swap(&mut self.stock, &mut self.waste);
+                self.waste.flip();
+            },
+
+            Play::Reveal(_) => self.play(&play),
+
+            Play::WasteTableau(tableau) => {
+                self.tableau[tableau as usize].move_to(&mut self.waste, 1);
+            },
+
+            Play::WasteFoundation(foundation) => {
+                self.foundations[foundation as usize].move_to(&mut self.waste, 1);
+            },
+
+            Play::TableauFoundation(tableau, foundation) => {
+                self.play(&Play::FoundationTableau(foundation, tableau));
+            },
+
+            Play::FoundationTableau(foundation, tableau) => {
+                self.play(&Play::TableauFoundation(tableau, foundation));
+            },
+
+            Play::TableauTableau(src, count, dest) => {
+                self.play(&Play::TableauTableau(dest, count, src));
+            },
+        }
+    }
 }
 
 impl Klondike {
