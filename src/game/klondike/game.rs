@@ -75,7 +75,7 @@ impl Game for Klondike {
             },
 
             Play::TableauTableau(src, count, dest) => {
-                self.tableau[src as usize].get_back(count).map_or(false, |face| {
+                self.tableau[src as usize].get_back(count as usize).map_or(false, |face| {
                     face.is_up() && self.is_valid_tableau(dest, face.card())
                 })
             },
@@ -120,10 +120,10 @@ impl Game for Klondike {
             Play::TableauTableau(src, count, dest) => {
                 if src < dest {
                     let (left, right) = self.tableau.split_at_mut(dest as usize);
-                    left[src as usize].move_to(&mut right[0], count);
+                    left[src as usize].move_to(&mut right[0], count as usize);
                 } else {
                     let (left, right) = self.tableau.split_at_mut(src as usize);
-                    right[0].move_to(&mut left[dest as usize], count);
+                    right[0].move_to(&mut left[dest as usize], count as usize);
                 }
                 self.tableau[src as usize].flip_top();
             },

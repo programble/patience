@@ -42,7 +42,7 @@ pub enum Play {
     FoundationTableau(Foundation, Tableau),
 
     /// Move cards from tableau to tableau.
-    TableauTableau(Tableau, usize, Tableau),
+    TableauTableau(Tableau, u8, Tableau),
 }
 
 /// Foundations.
