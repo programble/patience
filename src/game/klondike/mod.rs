@@ -29,6 +29,9 @@ pub enum Play {
     /// Move waste back to stock.
     Redeal,
 
+    /// Reveal the top card of a tableau pile.
+    Reveal(Tableau),
+
     /// Move top card of waste to tableau.
     WasteTableau(Tableau),
 

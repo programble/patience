@@ -50,6 +50,10 @@ impl Game for Klondike {
                 self.stock.is_empty() && !self.waste.is_empty()
             },
 
+            Play::Reveal(tableau) => {
+                self.tableau[tableau as usize].top().as_ref().map_or(false, Face::is_down)
+            },
+
             Play::WasteTableau(tableau) => {
                 self.waste.top().map_or(false, |face| {
                     self.is_valid_tableau(tableau, face.card())
@@ -92,6 +96,10 @@ impl Game for Klondike {
             Play::Redeal => {
                 mem::swap(&mut self.waste, &mut self.stock);
                 self.stock.flip();
+            },
+
+            Play::Reveal(tableau) => {
+                self.tableau[tableau as usize].flip_top();
             },
 
             Play::WasteTableau(tableau) => {

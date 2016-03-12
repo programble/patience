@@ -44,6 +44,26 @@ mod is_valid {
     }
 
     #[test]
+    fn valid_reveal() {
+        let mut game = Klondike::new(Draw::One);
+        game.stock.deal_to(&mut game.tableau[0], 1, false);
+        assert!(game.is_valid(&Play::Reveal(Tableau::One)));
+    }
+
+    #[test]
+    fn invalid_reveal_up() {
+        let mut game = Klondike::new(Draw::One);
+        game.stock.deal_to(&mut game.tableau[0], 1, true);
+        assert!(!game.is_valid(&Play::Reveal(Tableau::One)));
+    }
+
+    #[test]
+    fn invalid_reveal_empty() {
+        let game = Klondike::new(Draw::One);
+        assert!(!game.is_valid(&Play::Reveal(Tableau::One)));
+    }
+
+    #[test]
     fn valid_waste_tableau_king() {
         let mut game = Klondike::new(Draw::One);
         game.waste.push(Face::Up(card!(C K)));
@@ -368,6 +388,14 @@ mod play {
         }
         game.play(&Play::Redeal);
         assert_eq!(stock, game.stock);
+    }
+
+    #[test]
+    fn reveal() {
+        let mut game = Klondike::new(Draw::One);
+        game.stock.deal_to(&mut game.tableau[0], 1, false);
+        game.play(&Play::Reveal(Tableau::One));
+        assert!(game.tableau[0].top().unwrap().is_up());
     }
 
     #[test]
