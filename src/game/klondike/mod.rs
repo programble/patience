@@ -12,6 +12,32 @@ pub struct Klondike {
     tableau: [Pile; 7],
 }
 
+// Clone can't be derived for non-Copy array fields?
+impl Clone for Klondike {
+    fn clone(&self) -> Self {
+        Klondike {
+            draw: self.draw,
+            stock: self.stock.clone(),
+            waste: self.waste.clone(),
+            foundations: [
+                self.foundations[0].clone(),
+                self.foundations[1].clone(),
+                self.foundations[2].clone(),
+                self.foundations[3].clone(),
+            ],
+            tableau: [
+                self.tableau[0].clone(),
+                self.tableau[1].clone(),
+                self.tableau[2].clone(),
+                self.tableau[3].clone(),
+                self.tableau[4].clone(),
+                self.tableau[5].clone(),
+                self.tableau[6].clone(),
+            ],
+        }
+    }
+}
+
 /// One-card or three-card draw.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[allow(missing_docs)]
