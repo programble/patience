@@ -62,4 +62,7 @@ pub trait Canvas {
 
     /// Draws a card face.
     fn draw_face(&mut self, face: Face);
+
+    /// Draws an empty cell.
+    fn draw_cell(&mut self);
 }
