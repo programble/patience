@@ -31,8 +31,7 @@ impl Face {
     /// Returns the card.
     pub fn card(&self) -> Card {
         match *self {
-            Face::Down(card) => card,
-            Face::Up(card) => card,
+            Face::Down(card) | Face::Up(card) => card,
         }
     }
 
