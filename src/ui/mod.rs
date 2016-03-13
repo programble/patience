@@ -60,9 +60,6 @@ pub trait Canvas {
     /// Pops the current position.
     fn pop(&mut self);
 
-    /// Draws a card face.
-    fn draw_face(&mut self, face: Face);
-
-    /// Draws an empty cell.
-    fn draw_cell(&mut self);
+    /// Draws a card face or an empty cell.
+    fn draw(&mut self, face: Option<Face>);
 }
