@@ -1,7 +1,7 @@
 use super::Card;
 
 /// Iterator of the standard 52-card set.
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Default)]
 pub struct Set {
     card: Option<Card>,
 }
@@ -9,7 +9,7 @@ pub struct Set {
 impl Set {
     /// Creates a set.
     pub fn new() -> Self {
-        Set { card: None }
+        Set::default()
     }
 }
 
