@@ -7,7 +7,7 @@ use rand::{self, Rng};
 use super::Face;
 
 /// Pile of face-down or face-up cards.
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq, Default)]
 #[allow(missing_docs)]
 pub struct Pile {
     pub vec: Vec<Face>,
@@ -16,7 +16,7 @@ pub struct Pile {
 impl Pile {
     /// Creates an empty pile.
     pub fn new() -> Self {
-        Pile { vec: Vec::new() }
+        Pile::default()
     }
 
     /// Returns the number of cards in the pile.
