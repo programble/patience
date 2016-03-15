@@ -42,17 +42,11 @@ pub enum Height {
 
 /// Canvas on which cards can be drawn.
 pub trait Canvas {
-    /// Moves left.
-    fn left(&mut self, width: Width);
-
     /// Moves right.
     fn right(&mut self, width: Width);
 
     /// Moves down.
     fn down(&mut self, height: Height);
-
-    /// Moves up.
-    fn up(&mut self, height: Height);
 
     /// Pushes the current position.
     fn push(&mut self);
