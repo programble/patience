@@ -1,6 +1,6 @@
 //! User interfaces.
 
-use card::{Face, Pile};
+use card::Face;
 
 /// Widths proportional to cards.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
